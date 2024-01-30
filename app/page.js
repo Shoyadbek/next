@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useTelegram } from './telegram.provider'
 
 export default function Home() {
-  const [counter, setCounter] = useState<number>(0)
+  const [counter, setCounter] = useState(0)
   const telegram = useTelegram()
 
   const handleMainButtonClick = useCallback(() => {
@@ -17,7 +17,7 @@ export default function Home() {
       is_active: true,
       is_visible: true
     })
-  }, [])
+  }, [telegram.MainButton])
 
   useEffect(() => {
     telegram.onEvent('mainButtonClicked', handleMainButtonClick)

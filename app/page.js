@@ -1,7 +1,7 @@
 "use client";
 
-import { useTelegram } from "./telegram.provider";
 import { useState, useEffect, useCallback } from "react";
+import { useTelegram } from "./telegram.provider";
 
 export default function Home() {
   const [counter, setCounter] = useState(0);
@@ -9,27 +9,28 @@ export default function Home() {
   const telegram = useTelegram();
 
   const handleMainButtonClick = useCallback(() => {
-    telegram.showAlert("You clicked ${counter} times");
-  }, [counter]);
+    telegram.showAlert(`You clicked ${counter} times &apos;`);
+
+  }, [counter, telegram]);
 
   useEffect(() => {
     telegram.MainButton.setParams({
-      text: "CLICK ON ME",
+      text: 'CLICK ON ME',
       is_active: true,
       is_visible: true,
     });
-  });
+  }, [telegram]);
 
   useEffect(() => {
-    telegram.onEvent("mainButtonClicked", handleMainButtonClick);
-    return () => telegram.offEvent("mainButtonClicked", handleMainButtonClick);
-  }, [handleMainButtonClick]);
+    telegram.onEvent('mainButtonClicked', handleMainButtonClick);
+    return () => telegram.offEvent('mainButtonClicked', handleMainButtonClick);
+  }, [handleMainButtonClick, telegram]);
   return (
     <>
       <h2 className="text-2xl font-bold">
-        Hello, {telegram.initDataUnsafe?.user?.first_name || "user"}
+        Hello, {telegram.initDataUnsafe?.user?.first_name || 'user'}
       </h2>
-      <p className="text-neutral-400">Let's create a Telegram Web App!</p>
+      <p className="text-neutral-400">Lets create a Telegram Web App!</p>
       <div className="flex gap-2 mt-2">
         <div className="bg-neutral-800 rounded-lg text-2xl px-4 py-4 grow">
           <span className="block text-xs text-neutral-400 font-semibold tracking-wider uppercase">

@@ -8,7 +8,7 @@ export default function Home() {
 
   const handleMainButtonClick = useCallback(() => {
     // telegram.sendData(JSON.stringify({ counter }))
-    telegram.showAlert(`You clicked ${counter} times!`)
+    telegram.sendData(JSON.stringify({counter}))
   }, [counter, telegram])
 
   useEffect(() => {

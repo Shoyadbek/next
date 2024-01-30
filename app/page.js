@@ -1,10 +1,18 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
 import { useTelegram } from './telegram.provider'
+import Link from 'next/link';
+
+async function fetchData() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const result = await res.json();
+  return result;
+}
 
 export default function Home() {
   const [counter, setCounter] = useState(0)
   const telegram = useTelegram()
+  const [data, setData] = useState(null);
 
   const handleMainButtonClick = useCallback(() => {
     // telegram.sendData(JSON.stringify({ counter }))
@@ -19,6 +27,11 @@ export default function Home() {
     })
 
     telegram.expand();
+
+    fetchData().then((result) => {
+      setData(result);
+    })
+
   }, [telegram, telegram.MainButton])
 
   useEffect(() => {
@@ -39,6 +52,24 @@ export default function Home() {
           +
         </button>
       </div>
+
+      {data && (
+        <ul role="list" className="divide-y divide-gray-50">
+        {data.map((post) => (
+          <li key={post.id} className="flex justify-between gap-x-6 py-5">
+            <div className="flex min-w-0 gap-x-4">
+              <Link href={`/post/` + post.id}>
+                <div className="min-w-0 flex-auto">
+                  <p className="text-sm font-semibold leading-6 text-white-900">{post.title}</p>
+                </div>
+              </Link>
+              
+            </div>
+           
+          </li>
+        ))}
+      </ul>
+      )}
     </>
   )
 }

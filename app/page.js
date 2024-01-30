@@ -18,7 +18,7 @@ export default function Home() {
       is_visible: true
     })
 
-    telegram.isExpanded	= true;
+    telegram.expand();
   }, [telegram, telegram.MainButton])
 
   useEffect(() => {
